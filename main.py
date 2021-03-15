@@ -22,14 +22,12 @@ class Source(commands.Converter):
         raise BadArgument()
 
 
-@bot.command()
-async def shuffle(ctx, arg: typing.Optional[Source] = 'audio', *args):
+@bot.command(description="Shuffle and print list of items.")
+async def shuffle(ctx, arg: typing.Optional[Source] = 'list', *args):
     '''
-    Shuffle and print list of items.
-
     Usage: 
     'shuffle audio' to shuffle the members of the audio channel you're currently in.
-    'shuffle list item1 item2 item3' to shuffle items in list.
+    'shuffle list item1 item2 item3' to shuffle items in list. 'shuffle item1 item2 item3' also works.
 
     Options: -dm to send the result to your dms.
     '''
@@ -60,7 +58,8 @@ async def shuffle(ctx, arg: typing.Optional[Source] = 'audio', *args):
             await sendTo.send('Shuffling items in list...')
             await shuffleAndSend(items, sendTo)
         else:
-            await sendTo.send("You didn't specify a list to shuffle. Correct usage is `{0}shuffle list item1 item2 item3`".format(prefix))
+            await sendTo.send("You didn't specify a list to shuffle.\n" +
+                              "Correct usage is `{0}shuffle list item1 item2 item3`.\nYou can also use `{0}shuffle audio` to shuffle the members of the audio channel you're currently in.".format(prefix))
 
 
 async def shuffleAndSend(items, sendTo):
@@ -69,11 +68,9 @@ async def shuffleAndSend(items, sendTo):
         await sendTo.send(item)
 
 
-@bot.command()
-async def pick(ctx, arg: typing.Optional[Source] = 'audio', quantity: typing.Optional[int] = 1, *args):
+@bot.command(description="Pick quantity (default 1) from list.")
+async def pick(ctx, arg: typing.Optional[Source] = 'list', quantity: typing.Optional[int] = 1, *args):
     '''
-    Pick quantity (default 1) from list.
-
     Usage:
     'pick audio 3' to pick 3 users from the audio channel you're currently in.
     'pick list 2 item1 item2 item3' to pick 2 items from the list (item1, item2, item3).
@@ -102,7 +99,7 @@ async def pick(ctx, arg: typing.Optional[Source] = 'audio', quantity: typing.Opt
             await sendTo.send('Picking items in list...')
             await pickAndSend(items, quantity, sendTo)
         else:
-            await sendTo.send("You didn't specify a list to pick from. Correct usage is `{0}pick list item1 item2 item3`".format(prefix))
+            await sendTo.send("You didn't specify a list to pick from.\nCorrect usage is `{0}pick list item1 item2 item3`.".format(prefix))
 
 
 async def pickAndSend(items, quantity, sendTo):
