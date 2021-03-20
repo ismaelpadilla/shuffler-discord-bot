@@ -107,5 +107,8 @@ async def pickAndSend(items, quantity, sendTo):
     for _ in range(min(quantity, len(items))):
         await sendTo.send(items.pop())
 
+@bot.event
+async def on_ready():
+    print(bot.user.name + ': bot ready.')
 
 bot.run(os.getenv('TOKEN'))
