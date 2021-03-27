@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix=prefix, intents=intents, description='Bot crea
 
 class Source(commands.Converter):
     '''
-    Converter to convert an audio of other methods to something that we can shuffle or pick from
+    Converter to convert input of other methods to something that we can shuffle or pick from
     '''
     async def convert(self, ctx, argument):
         if argument in ('audio', 'list'):
