@@ -22,12 +22,12 @@ class Source(commands.Converter):
         raise BadArgument()
 
 
-@bot.command(description="Shuffle and print list of items.")
+@bot.command(description="Shuffle and print list of items.", usage="item1 item2 item3", brief="Shuffle a list of items (i.e. '$shuffle item1 item2 item3')")
 async def shuffle(ctx, arg: typing.Optional[Source] = 'list', *args):
     '''
     Usage: 
-    'shuffle audio' to shuffle the members of the audio channel you're currently in.
     'shuffle list item1 item2 item3' to shuffle items in list. 'shuffle item1 item2 item3' also works.
+    'shuffle audio' to shuffle the members of the audio channel you're currently in.
 
     Options: -dm to send the result to your dms.
     '''
@@ -68,12 +68,12 @@ async def shuffleAndSend(items, message):
         await message.edit(content = message.content + "\n" + item)
 
 
-@bot.command(description="Pick quantity (default 1) from list.")
+@bot.command(description="Pick quantity (default 1) from list.", usage="1 item1 item2 item3", brief="Pick from a list of items (i.e. '$pick 1 item1 item2 item3')")
 async def pick(ctx, arg: typing.Optional[Source] = 'list', quantity: typing.Optional[int] = 1, *args):
     '''
     Usage:
-    'pick audio 3' to pick 3 users from the audio channel you're currently in.
     'pick list 2 item1 item2 item3' to pick 2 items from the list (item1, item2, item3). 'pick 2 item1 item2 item3' also works.
+    'pick audio 3' to pick 3 users from the audio channel you're currently in.
     If you don't specify a number, one item will be chosen (i.e. 'pick item1 item2 item3')
 
     Options: -dm to send the result to your dms.
