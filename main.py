@@ -55,17 +55,17 @@ async def shuffle(ctx, arg: typing.Optional[Source] = 'list', *args):
     if arg == 'list':
         items = args
         if len(items) > 0:
-            await sendTo.send('Shuffling items in list...')
-            await shuffleAndSend(items, sendTo)
+            message = await sendTo.send('Shuffling items in list...')
+            await shuffleAndSend(items, message)
         else:
             await sendTo.send("You didn't specify a list to shuffle.\n" +
                               "Correct usage is `{0}shuffle list item1 item2 item3`.\nYou can also use `{0}shuffle audio` to shuffle the members of the audio channel you're currently in.".format(prefix))
 
 
-async def shuffleAndSend(items, sendTo):
+async def shuffleAndSend(items, message):
     random.shuffle(items)
     for item in items:
-        await sendTo.send(item)
+        await message.edit(content = message.content + "\n" + item)
 
 
 @bot.command(description="Pick quantity (default 1) from list.")
@@ -73,7 +73,8 @@ async def pick(ctx, arg: typing.Optional[Source] = 'list', quantity: typing.Opti
     '''
     Usage:
     'pick audio 3' to pick 3 users from the audio channel you're currently in.
-    'pick list 2 item1 item2 item3' to pick 2 items from the list (item1, item2, item3).
+    'pick list 2 item1 item2 item3' to pick 2 items from the list (item1, item2, item3). 'pick 2 item1 item2 item3' also works.
+    If you don't specify a number, one item will be chosen (i.e. 'pick item1 item2 item3')
 
     Options: -dm to send the result to your dms.
     '''
@@ -96,16 +97,24 @@ async def pick(ctx, arg: typing.Optional[Source] = 'list', quantity: typing.Opti
     if arg == 'list':
         items = args
         if len(items) > 0:
-            await sendTo.send('Picking items in list...')
-            await pickAndSend(items, quantity, sendTo)
+            if quantity > 0:
+                if quantity == 1:
+                    content = 'Picking 1 item...'
+                else:
+                    content = 'Picking ' + str(quantity) + ' items...'
+
+                message = await sendTo.send(content)
+                await pickAndSend(items, quantity, message)
+            else:
+                await sendTo.send("Number of items to pick must be at least 1.\nCorrect usage is `{0}pick 1 item1 item2 item3`.".format(prefix))
         else:
-            await sendTo.send("You didn't specify a list to pick from.\nCorrect usage is `{0}pick list item1 item2 item3`.".format(prefix))
+            await sendTo.send("You didn't specify a list to pick from.\nCorrect usage is `{0}pick item1 item2 item3`.".format(prefix))
 
 
-async def pickAndSend(items, quantity, sendTo):
+async def pickAndSend(items, quantity, message):
     random.shuffle(items)
     for _ in range(min(quantity, len(items))):
-        await sendTo.send(items.pop())
+        await message.edit(content = message.content + "\n" + items.pop())
 
 @bot.event
 async def on_ready():
