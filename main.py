@@ -87,7 +87,7 @@ async def pick(ctx, arg: typing.Optional[Source] = 'list', quantity: typing.Opti
     if arg == 'audio':
        # get audio channel the user is in
         if (user.voice != None):
-            message = await sendTo.send('Picking members in ' + user.voice.channel.name + '...')
+            message = await sendTo.send('Picking from members in ' + user.voice.channel.name + '...')
             # get list of members, shuffle it and send it
             channelMembers = user.voice.channel.members
             items = [member.name for member in channelMembers]
