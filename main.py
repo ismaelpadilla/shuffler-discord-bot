@@ -48,10 +48,10 @@ async def shuffle(ctx, arg: typing.Optional[Source] = 'list', *args):
             message = await sendTo.send('Shuffling members in ' + user.voice.channel.name + '...')
             # get list of members, shuffle it and send it
             channelMembers = user.voice.channel.members
-            items = [member.name for member in channelMembers]
+            items = [member.display_name for member in channelMembers]
             await shuffleAndSend(items, message)
         else:
-            await sendTo.send(user.name + " isn't in any audio channel!")
+            await sendTo.send(user.display_name + " isn't in any audio channel!")
     if arg == 'list':
         items = args
         if len(items) > 0:
@@ -90,10 +90,10 @@ async def pick(ctx, arg: typing.Optional[Source] = 'list', quantity: typing.Opti
             message = await sendTo.send('Picking from members in ' + user.voice.channel.name + '...')
             # get list of members, shuffle it and send it
             channelMembers = user.voice.channel.members
-            items = [member.name for member in channelMembers]
+            items = [member.display_name for member in channelMembers]
             await pickAndSend(items, quantity, message)
         else:
-            await sendTo.send(user.name + " isn't in any audio channel!")
+            await sendTo.send(user.display_name + " isn't in any audio channel!")
     if arg == 'list':
         items = args
         if len(items) > 0:
