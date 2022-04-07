@@ -9,7 +9,8 @@ intents = discord.Intents.default()
 intents.members = True
 load_dotenv()
 prefix = '$'
-bot = commands.Bot(command_prefix=prefix, intents=intents, description='Bot created to shuffle and pick from lists of items or lists of users')
+help_command = commands.DefaultHelpCommand(no_category = 'Commands')
+bot = commands.Bot(command_prefix=prefix, intents=intents, description='Bot created to shuffle and pick from lists of items or lists of users', help_command=help_command)
 
 
 class Source(commands.Converter):
