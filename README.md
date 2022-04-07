@@ -4,7 +4,7 @@ Bot to shuffle or pick from lists of items or lists of users.
 
 ## Usage
 
-`$help` basic information.
+`$help` shows basic information.
 
 For the shuffle and pick commands, adding the `-dm` option will send the result to your dms.
 
